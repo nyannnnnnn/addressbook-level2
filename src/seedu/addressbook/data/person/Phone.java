@@ -6,14 +6,13 @@ import seedu.addressbook.data.exception.IllegalValueException;
  * Represents a Person's phone number in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
-public class Phone implements Printable{
+public class Phone implements Printable extends Contact{
 
     public static final String EXAMPLE = "123456789";
     public static final String MESSAGE_PHONE_CONSTRAINTS = "Person phone numbers should only contain numbers";
     public static final String PHONE_VALIDATION_REGEX = "\\d+";
 
-    public final String value;
-    private boolean isPrivate;
+
 
     /**
      * Validates given phone number.
@@ -26,25 +25,15 @@ public class Phone implements Printable{
     	return value;
     }
     public Phone(String phone, boolean isPrivate) throws IllegalValueException {
-        this.isPrivate = isPrivate;
-        phone = phone.trim();
-        if (!isValidPhone(phone)) {
-            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
-        }
-        this.value = phone;
+        super(phone, isPrivate, PHONE_VALIDATION_REGEX, MESSAGE_PHONE_CONSTRAINTS);
     }
 
     /**
      * Checks if a given string is a valid person phone number.
      */
-    public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX);
-    }
+    
 
-    @Override
-    public String toString() {
-        return value;
-    }
+
 
     @Override
     public boolean equals(Object other) {
@@ -53,12 +42,4 @@ public class Phone implements Printable{
                 && this.value.equals(((Phone) other).value)); // state check
     }
 
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
-    public boolean isPrivate() {
-        return isPrivate;
-    }
 }
